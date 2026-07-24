@@ -180,7 +180,8 @@
         <p class="sub-notice">Điền đúng thông tin cần thiết hoặc liên hệ Admin | Cuối trang | Để hoàn thành đơn</p>
 
         <div class="form-card">
-            <form action="#" method="POST">
+            <!-- Đã thêm ID cho Form để xử lý JavaScript -->
+            <form id="orderForm">
                 
                 <!-- BƯỚC 1: CHỌN GÓI CẦN THUÊ -->
                 <div class="form-group">
@@ -188,50 +189,50 @@
                         <span class="step-num">1</span>
                         <span>Chọn Gói Cần Thuê</span>
                     </div>
-                    <select class="custom-select" required>
+                    <select id="serviceSelect" class="custom-select" required>
                         <option value="" disabled selected>Tìm và chọn dịch vụ cày thuê...</option>
                         
                         <!-- LẤY KIẾM / VŨ KHÍ -->
                         <optgroup label="⚔️ KIẾM & VŨ KHÍ">
-                            <option value="1">Lấy Yama - 10,000 đ</option>
-                            <option value="2">Lấy Tushita - 10,000 đ</option>
-                            <option value="3">Lấy Song Kiếm (CDK) - 20,000 đ</option>
-                            <option value="4">Combo Yama + Tushita + Song Kiếm (All-in-one) - 40,000 đ</option>
-                            <option value="5">Lấy Tam Kiếm (TTK) - 25,000 đ</option>
-                            <option value="6">Kiếm Rồng - 20,000 đ</option>
-                            <option value="7">Súng Rồng - 25,000 đ</option>
-                            <option value="8">Cuốc Mythic - 35,000 đ / 1 cái</option>
+                            <option value="Yama - 10,000 đ">Lấy Yama - 10,000 đ</option>
+                            <option value="Tushita - 10,000 đ">Lấy Tushita - 10,000 đ</option>
+                            <option value="Song Kiếm (CDK) - 20,000 đ">Lấy Song Kiếm (CDK) - 20,000 đ</option>
+                            <option value="Combo Yama + Tushita + Song Kiếm - 40,000 đ">Combo Yama + Tushita + Song Kiếm (All-in-one) - 40,000 đ</option>
+                            <option value="Tam Kiếm (TTK) - 25,000 đ">Lấy Tam Kiếm (TTK) - 25,000 đ</option>
+                            <option value="Kiếm Rồng - 20,000 đ">Kiếm Rồng - 20,000 đ</option>
+                            <option value="Súng Rồng - 25,000 đ">Súng Rồng - 25,000 đ</option>
+                            <option value="Cuốc Mythic - 35,000 đ">Cuốc Mythic - 35,000 đ / 1 cái</option>
                         </optgroup>
 
                         <!-- V4 & GEAR -->
                         <optgroup label="🧬 UP V4 & GEAR">
-                            <option value="9">Kéo Tim Leviathan - 25,000 đ</option>
-                            <option value="10">V4 A-Z (Thỏ / Cá / TT / Human) [Bao All] - 45,000 đ</option>
-                            <option value="11">V4 A-Z (Cyborg / Quỷ) [Bao All] - 55,000 đ</option>
-                            <option value="12">V4 Draco [Bao All] - 85,000 đ</option>
-                            <option value="13">Lẻ 1 Gear V4 - 10,000 đ (Không nhận từ 2 Gear trở xuống)</option>
-                            <option value="14">Mở Cổng Draco - 25,000 đ</option>
+                            <option value="Kéo Tim Leviathan - 25,000 đ">Kéo Tim Leviathan - 25,000 đ</option>
+                            <option value="V4 A-Z (Thỏ / Cá / TT / Human) - 45,000 đ">V4 A-Z (Thỏ / Cá / TT / Human) [Bao All] - 45,000 đ</option>
+                            <option value="V4 A-Z (Cyborg / Quỷ) - 55,000 đ">V4 A-Z (Cyborg / Quỷ) [Bao All] - 55,000 đ</option>
+                            <option value="V4 Draco - 85,000 đ">V4 Draco [Bao All] - 85,000 đ</option>
+                            <option value="Lẻ 1 Gear V4 - 10,000 đ">Lẻ 1 Gear V4 - 10,000 đ (Không nhận từ 2 Gear trở xuống)</option>
+                            <option value="Mở Cổng Draco - 25,000 đ">Mở Cổng Draco - 25,000 đ</option>
                         </optgroup>
 
                         <!-- VÕ & TRANG PHỤC -->
                         <optgroup label="🥊 VÕ & ITEMS">
-                            <option value="15">Lấy Godhuman - 30,000 đ / 1 cái</option>
-                            <option value="16">Lấy Võ Máu (Sanguine Art) - 40,000 đ</option>
-                            <option value="17">Dino Hood - 20,000 đ</option>
-                            <option value="18">Nhẫn Đỏ - 50,000 đ / 1 cái</option>
+                            <option value="Godhuman - 30,000 đ">Lấy Godhuman - 30,000 đ / 1 cái</option>
+                            <option value="Võ Máu - 40,000 đ">Lấy Võ Máu (Sanguine Art) - 40,000 đ</option>
+                            <option value="Dino Hood - 20,000 đ">Dino Hood - 20,000 đ</option>
+                            <option value="Nhẫn Đỏ - 50,000 đ">Nhẫn Đỏ - 50,000 đ / 1 cái</option>
                         </optgroup>
 
                         <!-- FARM LEVEL / BELI / FRAG -->
                         <optgroup label="📈 LEVEL / BELI / FRAGMENT">
-                            <option value="19">Up Level 0 -> 700 - 10,000 đ</option>
-                            <option value="20">Up Level 700 -> 1500 - 10,000 đ</option>
-                            <option value="21">Up Level 1500 -> 2800 - 20,000 đ</option>
-                            <option value="22">Up Lẻ Level (Vài trăm Level) - 10,000 đ</option>
-                            <option value="23">Farm Beli (Gói nhỏ): 1k / 1M Beli</option>
-                            <option value="24">Farm Beli (Gói 50M): 35,000 đ</option>
-                            <option value="25">Farm Beli (Gói 100M): 80,000 đ</option>
-                            <option value="26">Farm Fragment (Lẻ): 1.5k / 1k Frag</option>
-                            <option value="27">Farm Fragment (Số lượng nhiều): 1k / 1k Frag</option>
+                            <option value="Level 0 -> 700 - 10,000 đ">Up Level 0 -> 700 - 10,000 đ</option>
+                            <option value="Level 700 -> 1500 - 10,000 đ">Up Level 700 -> 1500 - 10,000 đ</option>
+                            <option value="Level 1500 -> 2800 - 20,000 đ">Up Level 1500 -> 2800 - 20,000 đ</option>
+                            <option value="Up Lẻ Level - 10,000 đ">Up Lẻ Level (Vài trăm Level) - 10,000 đ</option>
+                            <option value="Farm Beli (1k / 1M)">Farm Beli (Gói nhỏ): 1k / 1M Beli</option>
+                            <option value="Farm Beli 50M - 35,000 đ">Farm Beli (Gói 50M): 35,000 đ</option>
+                            <option value="Farm Beli 100M - 80,000 đ">Farm Beli (Gói 100M): 80,000 đ</option>
+                            <option value="Farm Frag (1.5k / 1k)">Farm Fragment (Lẻ): 1.5k / 1k Frag</option>
+                            <option value="Farm Frag (1k / 1k)">Farm Fragment (Số lượng nhiều): 1k / 1k Frag</option>
                         </optgroup>
                     </select>
                 </div>
@@ -243,7 +244,7 @@
                         <span>Xác Nhận Đặt Hàng</span>
                     </div>
                     <div class="info-box">
-                        📌 Quý khách vui lòng kiểm tra kỹ gói cày thuê đã chọn trước khi bấm nút tạo đơn. Sau khi tạo đơn thành công, liên hệ Admin qua Zalo/Fanpage để hoàn thành đơn.
+                        📌 Quý khách vui lòng kiểm tra kỹ gói cày thuê đã chọn trước khi bấm nút tạo đơn. Sau khi tạo đơn thành công, hệ thống sẽ tự động chuyển hướng đến trang hỗ trợ/liên hệ Admin.
                     </div>
                 </div>
 
@@ -254,7 +255,7 @@
                         <span>Ghi Chú & Xác Nhận</span>
                     </div>
                     <label class="field-label">Ghi Chú Cho Admin</label>
-                    <textarea class="custom-textarea" maxlength="500" placeholder="Nhập ghi chú yêu cầu thêm cho admin nếu có..."></textarea>
+                    <textarea id="noteText" class="custom-textarea" maxlength="500" placeholder="Nhập ghi chú yêu cầu thêm cho admin nếu có..."></textarea>
                     <div class="char-count">0 / 500</div>
                 </div>
 
@@ -270,6 +271,29 @@
         </div>
 
     </div>
+
+    <!-- JAVASCRIPT XỬ LÝ CHUYỂN TRANG -->
+    <script>
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Ngăn trang reload mặc định
+
+            const selectedService = document.getElementById('serviceSelect').value;
+            const note = document.getElementById('noteText').value;
+
+            if (selectedService) {
+                // ĐIỀN ĐƯỜNG DẪN TRANG BẠN MUỐN NHẢY TỚI VÀO ĐÂY:
+                // Có thể là file HTML khác (ví dụ: 'thanh-toan.html') hoặc Link Zalo/Messenger/Admin
+                const redirectUrl = "https://zalo.me/0123456789"; 
+
+                alert("✅ Tạo đơn thành công! Đang chuyển hướng quý khách sang trang tiếp theo...");
+                
+                // Thực hiện chuyển trang
+                window.location.href = redirectUrl;
+            } else {
+                alert("⚠️ Vui lòng chọn gói dịch vụ trước khi tạo đơn hàng!");
+            }
+        });
+    </script>
 
 </body>
 </html>
