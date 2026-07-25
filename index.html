@@ -103,7 +103,7 @@
         }
 
         /* INPUT & SELECT */
-        .custom-input, .custom-select, .custom-textarea {
+        .custom-select, .custom-textarea {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #cbd5e1;
@@ -115,33 +115,49 @@
             margin-bottom: 12px;
         }
 
-        .custom-input:focus, .custom-select:focus, .custom-textarea:focus {
+        .custom-select:focus, .custom-textarea:focus {
             border-color: #7c3aed;
         }
 
-        /* Ô VUÔNG QUY ĐỊNH LƯU Ý MỚI */
-        .rule-box {
-            background-color: #fff1f2;
-            border: 2px solid #fda4af;
+        /* NÚT LINK VIDEO HƯỚNG DẪN */
+        .video-link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background-color: #f1f5f9;
+            border: 2px dashed #a855f7;
             border-radius: 8px;
             padding: 15px 20px;
+            text-decoration: none;
+            color: #1e1135;
+            transition: all 0.2s ease;
             margin-bottom: 18px;
-            color: #9f1239;
-            font-size: 14px;
-            line-height: 1.6;
         }
 
-        .rule-box ul {
-            list-style-type: disc;
-            padding-left: 20px;
+        .video-link-card:hover {
+            background-color: #f3e8ff;
+            border-color: #7c3aed;
+            transform: translateY(-2px);
         }
 
-        .rule-box li {
-            margin-bottom: 4px;
+        .video-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 15px;
         }
 
-        .rule-box .highlight-red {
-            color: #e11d48;
+        .video-icon {
+            font-size: 24px;
+        }
+
+        .video-btn-tag {
+            background-color: #e11d48;
+            color: #ffffff;
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
             font-weight: 700;
         }
 
@@ -253,31 +269,21 @@
                     </select>
                 </div>
 
-                <!-- BƯỚC 2: THÔNG TIN TÀI KHOẢN & LƯU Ý -->
+                <!-- BƯỚC 2: LINK VIDEO HƯỚNG DẪN -->
                 <div class="form-group">
                     <div class="step-title">
                         <span class="step-num">2</span>
-                        <span>Thông Tin Tài Khoản</span>
+                        <span>Hướng Dẫn Lấy Mã / Đặt Đơn</span>
                     </div>
 
-                    <!-- Ô VUÔNG QUY ĐỊNH DÀNH CHO KHÁCH -->
-                    <div class="rule-box">
-                        <ul>
-                            <li><strong>Tk:</strong> (kiểm tra kỹ sai mất 5k)</li>
-                            <li><strong>Mk:</strong> (kiểm tra kỹ sai mất 5k)</li>
-                            <li><strong>Mã dự phòng:</strong> <span class="highlight-red">( BẮT BUỘC )</span></li>
-                            <li><span class="highlight-red">Trong lúc lên đơn cày thuê tuyệt đối không log acc. (Đăng nhập lúc cày gây ra lỗi HUỶ KHÔNG HOÀN)</span></li>
-                        </ul>
-                    </div>
-                    
-                    <label class="field-label">Tài Khoản (Tk) *</label>
-                    <input type="text" id="accUsername" class="custom-input" placeholder="Nhập tài khoản (kiểm tra kỹ sai mất 5k)..." required>
-
-                    <label class="field-label">Mật Khẩu (Mk) *</label>
-                    <input type="password" id="accPassword" class="custom-input" placeholder="Nhập mật khẩu (kiểm tra kỹ sai mất 5k)..." required>
-
-                    <label class="field-label">Mã Dự Phòng *</label>
-                    <input type="text" id="accBackupCode" class="custom-input" placeholder="Nhập mã dự phòng ( BẮT BUỘC )..." required>
+                    <!-- Ô CHỨA LINK VIDEO (THAY LINK CỦA BẠN VÀO CHỖ href="...") -->
+                    <a href="https://www.youtube.com/watch?v=LINK_VIDEO_CUA_BAN" target="_blank" class="video-link-card">
+                        <div class="video-info">
+                            <span class="video-icon">🎬</span>
+                            <span>Bấm vào đây để xem Video hướng dẫn chi tiết</span>
+                        </div>
+                        <span class="video-btn-tag">Xem Ngay</span>
+                    </a>
                 </div>
 
                 <!-- BƯỚC 3: GHI CHÚ & XÁC NHẬN -->
@@ -293,7 +299,7 @@
 
                 <!-- NÚT TẠO ĐƠN HÀNG -->
                 <div class="action-area">
-                    <p class="warning-text">Vui lòng kiểm tra chính xác thông tin trước khi tạo đơn</p>
+                    <p class="warning-text">Vui lòng chọn dịch vụ trước khi tạo đơn</p>
                     <button type="submit" class="btn-submit">
                         🛒 Tạo Đơn Hàng
                     </button>
@@ -320,18 +326,16 @@
             e.preventDefault();
 
             const selectedService = document.getElementById('serviceSelect').value;
-            const username = document.getElementById('accUsername').value;
-            const backupCode = document.getElementById('accBackupCode').value;
 
-            if (selectedService && username && backupCode) {
+            if (selectedService) {
                 // Link Zalo liên hệ Admin
                 const redirectUrl = "https://zalo.me/0392192506"; 
 
-                alert("✅ Tạo đơn thành công!\nTài khoản: " + username + "\nDịch vụ: " + selectedService + "\n\nĐang chuyển hướng sang Zalo Admin...");
+                alert("✅ Tạo đơn thành công!\nDịch vụ: " + selectedService + "\n\nĐang chuyển hướng sang Zalo Admin...");
                 
                 window.location.href = redirectUrl;
             } else {
-                alert("⚠️ Vui lòng điền đầy đủ Tài khoản, Mật khẩu và Mã dự phòng BẮT BUỘC!");
+                alert("⚠️ Vui lòng chọn gói dịch vụ trước khi tạo đơn hàng!");
             }
         });
     </script>
