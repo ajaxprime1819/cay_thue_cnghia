@@ -103,7 +103,7 @@
         }
 
         /* INPUT & SELECT */
-        .custom-select, .custom-textarea {
+        .custom-input, .custom-select, .custom-textarea {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #cbd5e1;
@@ -112,25 +112,43 @@
             outline: none;
             transition: border-color 0.2s ease;
             background-color: #fff;
+            margin-bottom: 12px;
         }
 
-        .custom-select:focus, .custom-textarea:focus {
+        .custom-input:focus, .custom-select:focus, .custom-textarea:focus {
             border-color: #7c3aed;
         }
 
-        .info-box {
-            background-color: #f8fafc;
-            border: 1px dashed #cbd5e1;
+        /* Ô VUÔNG QUY ĐỊNH LƯU Ý MỚI */
+        .rule-box {
+            background-color: #fff1f2;
+            border: 2px solid #fda4af;
             border-radius: 8px;
-            padding: 15px;
+            padding: 15px 20px;
+            margin-bottom: 18px;
+            color: #9f1239;
             font-size: 14px;
-            color: #475569;
-            line-height: 1.5;
+            line-height: 1.6;
+        }
+
+        .rule-box ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .rule-box li {
+            margin-bottom: 4px;
+        }
+
+        .rule-box .highlight-red {
+            color: #e11d48;
+            font-weight: 700;
         }
 
         .custom-textarea {
             height: 100px;
             resize: vertical;
+            margin-bottom: 0;
         }
 
         .char-count {
@@ -180,7 +198,6 @@
         <p class="sub-notice">Điền đúng thông tin cần thiết hoặc liên hệ Admin | Cuối trang | Để hoàn thành đơn</p>
 
         <div class="form-card">
-            <!-- Đã thêm ID cho Form để xử lý JavaScript -->
             <form id="orderForm">
                 
                 <!-- BƯỚC 1: CHỌN GÓI CẦN THUÊ -->
@@ -236,31 +253,47 @@
                     </select>
                 </div>
 
-                <!-- BƯỚC 2: XÁC NHẬN ĐẶT HÀNG -->
+                <!-- BƯỚC 2: THÔNG TIN TÀI KHOẢN & LƯU Ý -->
                 <div class="form-group">
                     <div class="step-title">
                         <span class="step-num">2</span>
-                        <span>Xác Nhận Đặt Hàng</span>
+                        <span>Thông Tin Tài Khoản</span>
                     </div>
-                    <div class="info-box">
-                        📌 Quý khách vui lòng kiểm tra kỹ gói cày thuê đã chọn trước khi bấm nút tạo đơn. Sau khi tạo đơn thành công, hệ thống sẽ tự động chuyển hướng đến trang hỗ trợ/liên hệ Admin.
+
+                    <!-- Ô VUÔNG QUY ĐỊNH DÀNH CHO KHÁCH -->
+                    <div class="rule-box">
+                        <ul>
+                            <li><strong>Tk:</strong> (kiểm tra kỹ sai mất 5k)</li>
+                            <li><strong>Mk:</strong> (kiểm tra kỹ sai mất 5k)</li>
+                            <li><strong>Mã dự phòng:</strong> <span class="highlight-red">( BẮT BUỘC )</span></li>
+                            <li><span class="highlight-red">Trong lúc lên đơn cày thuê tuyệt đối không log acc. (Đăng nhập lúc cày gây ra lỗi HUỶ KHÔNG HOÀN)</span></li>
+                        </ul>
                     </div>
+                    
+                    <label class="field-label">Tài Khoản (Tk) *</label>
+                    <input type="text" id="accUsername" class="custom-input" placeholder="Nhập tài khoản (kiểm tra kỹ sai mất 5k)..." required>
+
+                    <label class="field-label">Mật Khẩu (Mk) *</label>
+                    <input type="password" id="accPassword" class="custom-input" placeholder="Nhập mật khẩu (kiểm tra kỹ sai mất 5k)..." required>
+
+                    <label class="field-label">Mã Dự Phòng *</label>
+                    <input type="text" id="accBackupCode" class="custom-input" placeholder="Nhập mã dự phòng ( BẮT BUỘC )..." required>
                 </div>
 
                 <!-- BƯỚC 3: GHI CHÚ & XÁC NHẬN -->
                 <div class="form-group">
                     <div class="step-title">
                         <span class="step-num">3</span>
-                        <span>Ghi Chú & Xác Nhận</span>
+                        <span>Ghi Chú Cho Admin</span>
                     </div>
-                    <label class="field-label">Ghi Chú Cho Admin</label>
+                    <label class="field-label">Ghi Chú Bổ Sung</label>
                     <textarea id="noteText" class="custom-textarea" maxlength="500" placeholder="Nhập ghi chú yêu cầu thêm cho admin nếu có..."></textarea>
-                    <div class="char-count">0 / 500</div>
+                    <div class="char-count"><span id="charCount">0</span> / 500</div>
                 </div>
 
                 <!-- NÚT TẠO ĐƠN HÀNG -->
                 <div class="action-area">
-                    <p class="warning-text">Vui lòng chọn gói cần thuê</p>
+                    <p class="warning-text">Vui lòng kiểm tra chính xác thông tin trước khi tạo đơn</p>
                     <button type="submit" class="btn-submit">
                         🛒 Tạo Đơn Hàng
                     </button>
@@ -271,25 +304,34 @@
 
     </div>
 
-    <!-- JAVASCRIPT XỬ LÝ CHUYỂN TRANG -->
+    <!-- JAVASCRIPT XỬ LÝ -->
     <script>
+        // Cập nhật bộ đếm ký tự cho ô Ghi chú
+        const noteText = document.getElementById('noteText');
+        const charCount = document.getElementById('charCount');
+        if (noteText) {
+            noteText.addEventListener('input', function() {
+                charCount.textContent = this.value.length;
+            });
+        }
+
+        // Xử lý nút Tạo Đơn Hàng
         document.getElementById('orderForm').addEventListener('submit', function(e) {
-            e.preventDefault(); // Ngăn trang reload mặc định
+            e.preventDefault();
 
             const selectedService = document.getElementById('serviceSelect').value;
-            const note = document.getElementById('noteText').value;
+            const username = document.getElementById('accUsername').value;
+            const backupCode = document.getElementById('accBackupCode').value;
 
-            if (selectedService) {
-                // ĐIỀN ĐƯỜNG DẪN TRANG BẠN MUỐN NHẢY TỚI VÀO ĐÂY:
-                // Có thể là file HTML khác (ví dụ: 'thanh-toan.html') hoặc Link Zalo/Messenger/Admin
+            if (selectedService && username && backupCode) {
+                // Link Zalo liên hệ Admin
                 const redirectUrl = "https://zalo.me/0392192506"; 
 
-                alert("✅ Tạo đơn thành công! Đang chuyển hướng quý khách sang trang tiếp theo...");
+                alert("✅ Tạo đơn thành công!\nTài khoản: " + username + "\nDịch vụ: " + selectedService + "\n\nĐang chuyển hướng sang Zalo Admin...");
                 
-                // Thực hiện chuyển trang
                 window.location.href = redirectUrl;
             } else {
-                alert("⚠️ Vui lòng chọn gói dịch vụ trước khi tạo đơn hàng!");
+                alert("⚠️ Vui lòng điền đầy đủ Tài khoản, Mật khẩu và Mã dự phòng BẮT BUỘC!");
             }
         });
     </script>
