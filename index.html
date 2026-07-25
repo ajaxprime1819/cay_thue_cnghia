@@ -94,16 +94,8 @@
             font-size: 13px;
         }
 
-        .field-label {
-            display: block;
-            font-size: 13px;
-            font-weight: 700;
-            color: #475569;
-            margin-bottom: 6px;
-        }
-
         /* INPUT & SELECT */
-        .custom-select, .custom-textarea {
+        .custom-select {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid #cbd5e1;
@@ -115,7 +107,7 @@
             margin-bottom: 12px;
         }
 
-        .custom-select:focus, .custom-textarea:focus {
+        .custom-select:focus {
             border-color: #7c3aed;
         }
 
@@ -161,17 +153,29 @@
             font-weight: 700;
         }
 
-        .custom-textarea {
-            height: 100px;
-            resize: vertical;
-            margin-bottom: 0;
+        /* Ô THÔNG BÁO / LƯU Ý MỚI THAY THẾ CHO Ô GHI CHÚ */
+        .notice-box {
+            background-color: #fff1f2;
+            border: 2px solid #fecdd3;
+            border-radius: 8px;
+            padding: 16px 20px;
+            color: #881337;
+            font-size: 14px;
+            line-height: 1.6;
         }
 
-        .char-count {
-            text-align: right;
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 4px;
+        .notice-box ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        .notice-box li {
+            margin-bottom: 6px;
+        }
+
+        .notice-box .highlight {
+            color: #e11d48;
+            font-weight: 700;
         }
 
         /* ACTION AREA */
@@ -276,7 +280,7 @@
                         <span>Hướng Dẫn Lấy Mã / Đặt Đơn</span>
                     </div>
 
-                    <!-- Ô CHỨA LINK VIDEO (THAY LINK CỦA BẠN VÀO CHỖ href="...") -->
+                    <!-- Ô CHỨA LINK VIDEO -->
                     <a href="https://www.youtube.com/watch?v=LINK_VIDEO_CUA_BAN" target="_blank" class="video-link-card">
                         <div class="video-info">
                             <span class="video-icon">🎬</span>
@@ -286,15 +290,22 @@
                     </a>
                 </div>
 
-                <!-- BƯỚC 3: GHI CHÚ & XÁC NHẬN -->
+                <!-- BƯỚC 3: LƯU Ý QUAN TRỌNG (ĐÃ THAY THẾ CHO BƯỚC GHI CHÚ) -->
                 <div class="form-group">
                     <div class="step-title">
                         <span class="step-num">3</span>
-                        <span>Ghi Chú Cho Admin</span>
+                        <span>Lưu Ý Quan Trọng Khi Đặt Hàng</span>
                     </div>
-                    <label class="field-label">Ghi Chú Bổ Sung</label>
-                    <textarea id="noteText" class="custom-textarea" maxlength="500" placeholder="Nhập ghi chú yêu cầu thêm cho admin nếu có..."></textarea>
-                    <div class="char-count"><span id="charCount">0</span> / 500</div>
+
+                    <div class="notice-box">
+                        <ul>
+                            <li><strong>Tk:</strong> (kiểm tra kỹ sai mất 5k)</li>
+                            <li><strong>Mk:</strong> (kiểm tra kỹ sai mất 5k)</li>
+                            <li><strong>Mã dự phòng:</strong> <span class="highlight">( BẮT BUỘC )</span></li>
+                            <li><span class="highlight">Trong lúc lên đơn cày thuê tuyệt đối không log acc. (Đăng nhập lúc cày gây ra lỗi HUỶ KHÔNG HOÀN)</span></li>
+                            <li><strong>Sao chép và gửi vào zalo nghĩa sau khi đã chuyển tiền đơn hàng muốn đặt</strong></li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- NÚT TẠO ĐƠN HÀNG -->
@@ -312,15 +323,6 @@
 
     <!-- JAVASCRIPT XỬ LÝ -->
     <script>
-        // Cập nhật bộ đếm ký tự cho ô Ghi chú
-        const noteText = document.getElementById('noteText');
-        const charCount = document.getElementById('charCount');
-        if (noteText) {
-            noteText.addEventListener('input', function() {
-                charCount.textContent = this.value.length;
-            });
-        }
-
         // Xử lý nút Tạo Đơn Hàng
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
@@ -331,7 +333,7 @@
                 // Link Zalo liên hệ Admin
                 const redirectUrl = "https://zalo.me/0392192506"; 
 
-                alert("✅ Tạo đơn thành công!\nDịch vụ: " + selectedService + "\n\nĐang chuyển hướng sang Zalo Admin...");
+                alert("✅ Tạo đơn thành công!\nDịch vụ: " + selectedService + "\n\nĐang chuyển hướng sang Zalo Nghĩa...");
                 
                 window.location.href = redirectUrl;
             } else {
